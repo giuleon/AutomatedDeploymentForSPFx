@@ -30,6 +30,11 @@ In order to use properly this script, is necessary install the [PnP Powershell](
 
 * Last step open the App Catalog and trigger the deploy for your SPFx solution
 
+> For different environments you can create more files properly configured as this example:
+> - DeploySPFxToO365CDN.**Test**.ps1
+> - DeploySPFxToO365CDN.**QA**.ps1
+> - DeploySPFxToO365CDN.**Production**.ps1
+
 ***
 ## For More Info Read My Blog Post
 [http://www.delucagiuliano.com/automated-deployment-of-your-sharepoint-framework-solution-to-office-365-cdn](http://www.delucagiuliano.com/automated-deployment-of-your-sharepoint-framework-solution-to-office-365-cdn)
