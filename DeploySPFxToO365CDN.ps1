@@ -7,7 +7,7 @@ $catalogSite = 'https://giuleon.sharepoint.com/sites/apps'
 $catalogName = 'AppCatalog'
 #######
 # End #
-######à
+#######
 
 Write-Host ************************************************************************************** -ForegroundColor Yellow
 Write-Host * Reading the cdnBasePath from write-manifests.json and collectiong the bundle files * -ForegroundColor Yellow
