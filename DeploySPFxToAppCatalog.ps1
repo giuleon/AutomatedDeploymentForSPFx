@@ -109,7 +109,7 @@ Write-Host "ListItem Id - " $fileId  " / Version - " $fileVersion
 # Read the xml
 $xmlBody = Get-Content DeploySPFxToAppCatalogRequestBody.xml -Encoding UTF8
 $xmlBody = setXmlMapping -xmlBody $xmlBody -siteId $siteId -webId $webId -listId $listId -fileId $fileId -fileVersion $fileVersion -skipDeployment $skipFeatureDeployment
-Write-Host $xmlBody
+Write-Host "deployment in progress....."
 
 # Deploy the sspkg
 $webSession.Headers.Add("Content-type", "application/xml")
