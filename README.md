@@ -9,7 +9,7 @@ In order to use properly this script, is necessary install the [PnP Powershell](
 
 ## How to use it
 
-* Include the powershell files **DeploySPFxToO365CDN.ps1**, **DeploySPFxToAppCatalog.ps1** and the xml file **DeplosSPFxToAppCatalogRequestBody.xml** directly into the root of your SharePoint Framework solution. The first file uploads the SPFx bundle on Office 365, the second uploads and deploys the sppkg into the App Catalog and lastly, the third XML file is necessary in order to make the deploy.
+* Include the powershell files **DeploySPFxToO365CDN.ps1**, **DeploySPFxToAppCatalog.ps1** and the xml file **DeploySPFxToAppCatalogRequestBody.xml** directly into the root of your SharePoint Framework solution. The first file uploads the SPFx bundle on Office 365, the second uploads and deploys the sppkg into the App Catalog and lastly, the third XML file is necessary in order to make the deploy.
 
 * Setup the Office 365 CDN url `cdnBasePath` in the `write-manifest.json`.
 
