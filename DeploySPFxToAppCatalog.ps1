@@ -1,33 +1,34 @@
 #################
 # Configuration #
 #################
-$catalogSite = "https://giuleon.sharepoint.com/sites/apps" # => Insert your catalog site
-$catalogName = "AppCatalog" # => the catalog name
-$catalogRelativePath = "sites/apps/AppCatalog" # => app catalog site relative url
+$catalogSite = "https://giuleon.sharepoint.com/sites/apps" # => App Catalog site
+$catalogRelativePath = "sites/apps/AppCatalog" # => App Catalog relative url
 #######
 # End #
 #######
-#Get-Command -Module *PnP*
+
+# Get Web Request
 function GetRequest ($apiUrl, $webSession) {
     return Invoke-WebRequest -Uri $apiUrl -Method Get -WebSession $webSession
 }
 
+# Post Web Request
 function PostRequest($apiUrl, $webSession, $body) {
     return Invoke-WebRequest -Uri $apiUrl -Body $body -Method Post -WebSession $webSession
    
 }
 
+# Settting the right parameters value
 function setXmlMapping($xmlBody, $siteId, $webId, $listId, $fileId, $fileVersion, $skipDeployment) {
     # Replace the random token with a random guid
     $randomGuid = [guid]::NewGuid()
-    $skipDep = $skipDeployment
     if($skipDeployment -eq $True){
-        $skipDep = "true"
+        $skipDeployment = "true"
     }
     else{
-        $skipDep = "false"
+        $skipDeployment = "false"
     }
-    $xmlBody = [regex]::replace($xmlBody, "{randomId}", $randomGuid) #$xmlBody.replace([RegExp]::("\\{randomId\\}", "g"), $randomGuid)
+    $xmlBody = [regex]::replace($xmlBody, "{randomId}", $randomGuid)
     # Replace the site ID token with the actual site ID string
     $xmlBody = [regex]::replace($xmlBody, "{siteId}", $siteId)
     # Replace the web ID token with the actual web ID string
@@ -39,7 +40,7 @@ function setXmlMapping($xmlBody, $siteId, $webId, $listId, $fileId, $fileVersion
     # Replace the file version token with the actual file version number
     $xmlBody = [regex]::replace($xmlBody, "{fileVersion}", $fileVersion)
     # Replace the skipFeatureDeployment token with the skipFeatureDeployment option
-    $xmlBody = [regex]::replace($xmlBody, "{skipFeatureDeployment}", $skipDep)
+    $xmlBody = [regex]::replace($xmlBody, "{skipFeatureDeployment}", $skipDeployment)
     return $xmlBody;
 }
 
@@ -50,18 +51,17 @@ $packageConfig = Get-Content -Raw -Path .\config\package-solution.json | Convert
 $packagePath = Join-Path "sharepoint/" $packageConfig.paths.zippedPackage -Resolve
 $skipFeatureDeployment = $packageConfig.solution.skipFeatureDeployment
 
+# Connect-PnPOnline $catalogSite -Credentials (Get-Credential)
 Connect-PnPOnline $catalogSite -Credentials giuleon
-Add-PnPFile -Path $packagePath -Folder $catalogName
+Add-PnPFile -Path $packagePath -Folder "AppCatalog"
 
 Write-Host *************************************************** -ForegroundColor Yellow
-Write-Host * The SPFx solution has been succesfully deployed * -ForegroundColor Yellow
+Write-Host * The SPFx solution has been succesfully uploaded to the AppCatalog * -ForegroundColor Yellow
 Write-Host *************************************************** -ForegroundColor Yellow
 
 # Connect to SharePoint Online
 $targetSite = "https://giuleon.sharepoint.com/sites/apps"
 $targetSiteUri = [System.Uri]$targetSite
- 
-#Connect-PnPOnline $targetSite -Credentials giuleon
  
 # Retrieve the client credentials and the related Authentication Cookies
 $context = (Get-PnPWeb).Context
@@ -111,6 +111,7 @@ $xmlBody = Get-Content DeploySPFxToAppCatalogRequestBody.xml -Encoding UTF8
 $xmlBody = setXmlMapping -xmlBody $xmlBody -siteId $siteId -webId $webId -listId $listId -fileId $fileId -fileVersion $fileVersion -skipDeployment $skipFeatureDeployment
 Write-Host $xmlBody
 
+# Deploy the sspkg
 $webSession.Headers.Add("Content-type", "application/xml")
 $apiUrl = $catalogSite + "/_vti_bin/client.svc/ProcessQuery"
 $result = PostRequest -apiUrl $apiUrl -webSession $webSession -body $xmlBody
