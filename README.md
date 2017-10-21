@@ -35,3 +35,13 @@ In order to use properly this script, is necessary install the [PnP Powershell](
 ***
 ## For More Info Read My Blog Post
 [http://www.delucagiuliano.com/automated-deployment-of-your-sharepoint-framework-solution-to-office-365-cdn](http://www.delucagiuliano.com/automated-deployment-of-your-sharepoint-framework-solution-to-office-365-cdn)
+
+***
+## In order to configure the continuous integration and deployment on Visual Studio Team Services, follow the steps on my blog post
+
+> use the following files:
+> * **VSTS.DeploySPFxToAppCatalog.ps1**
+> * **VSTS.DeploySPFxToO365CDN.ps1**
+> * **DeploySPFxToAppCatalogRequestBody.xml**
+
+[http://www.delucagiuliano.com/continuous-integration-and-deployment-for-your-sharepoint-framework-solutions](http://www.delucagiuliano.com/continuous-integration-and-deployment-for-your-sharepoint-framework-solutions)
