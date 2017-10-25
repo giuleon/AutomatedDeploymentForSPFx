@@ -85,6 +85,7 @@ $authenticationCookies = $credentials.GetAuthenticationCookie($targetSiteUri, $t
 # Set the Authentication Cookies and the Accept HTTP Header
 $webSession = New-Object Microsoft.PowerShell.Commands.WebRequestSession  
 $webSession.Cookies.SetCookies($targetSiteUri, $authenticationCookies)
+$webSession.Cookies.SetCookies([System.Uri]$catalogSite, $authenticationCookies)
 $webSession.Headers.Add("Accept", "application/json;odata=verbose")
 
 $apiUrl = $catalogSite + "/_api/contextinfo?$"+"select=FormDigestValue"
